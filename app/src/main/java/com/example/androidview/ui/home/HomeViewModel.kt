@@ -10,4 +10,8 @@ class HomeViewModel : ViewModel() {
         value = "Trenutno nemate aktivnih anketa"
     }
     val text: LiveData<String> = _text
+
+    fun updateText(newText: String) {
+        _text.value = newText
+    }
 }

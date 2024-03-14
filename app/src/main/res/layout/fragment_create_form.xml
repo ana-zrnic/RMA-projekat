@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.dashboard.JoinFormFragment">
+    tools:context=".ui.home.CreateFormFragment">
 
     <!-- Add your UI components here -->
     <TextView
@@ -12,8 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
-        android:text="This is the Join Form"
+        android:text="This is the Create Form"
         android:textSize="24sp"
         android:textStyle="bold"
         />
+
 </FrameLayout>

@@ -24,4 +24,13 @@
         android:label="Pridruži se anketi"
         tools:layout="@layout/fragment_join_form" />
 
+    <!-- Definition for the CreateFormFragment -->
+    <fragment
+        android:id="@+id/createFormFragment"
+        android:name="com.example.androidview.ui.home.CreateFormFragment"
+        android:label="Kreiraj anketu"
+        tools:layout="@layout/fragment_create_form" />
+
+
+
 </navigation>
