@@ -100,6 +100,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/select_voting_deadline" />
+        <TextView
+            android:id="@+id/selectedDateTimeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
