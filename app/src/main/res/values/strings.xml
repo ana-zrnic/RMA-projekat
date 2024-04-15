@@ -22,7 +22,16 @@
     <string name="hint_enter_password">Unesi lozinku</string>
     <string name="action_join">Pridruži se</string>
 
+    <!-- Strings for Login Activity -->
+    <string name="username">Korisničko ime</string>
+    <string name="password">Lozinka</string>
+    <string name="login">Prijavi me</string>
+    <string name="goto_signup">Kreiraj nalog</string>
 
+    <!-- Strings for Signup Activity -->
+    <string name="signup">Kreiraj nalog</string>
+    <string name="new_username">Novo Korisničko ime</string>
+    <string name="new_password">Lozinka</string>
 
 
 
