@@ -4,10 +4,16 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import java.lang.RuntimeException
 
-@Database(entities = [UserEntity::class], version = 1)
+
+@Database(entities = [UserEntity::class, PollEntity::class, OptionEntity::class, ResponseEntity::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
+    abstract fun pollDao(): PollDao
+    abstract fun optionDao(): OptionDao
+    abstract fun responseDao(): ResponseDao
+
 
     companion object {
         @Volatile
@@ -15,14 +21,18 @@ abstract class AppDatabase : RoomDatabase() {
 
         fun getDatabase(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    AppDatabase::class.java,
-                    "app_database"
-                ).fallbackToDestructiveMigration() // Handle migration appropriately.
-                    .build()
-                INSTANCE = instance
-                instance
+                try{
+                    val instance = Room.databaseBuilder(
+                        context.applicationContext,
+                        AppDatabase::class.java,
+                        "app_database"
+                    ).fallbackToDestructiveMigration() // Handle migration appropriately.
+                        .build()
+                    INSTANCE = instance
+                    instance
+                }catch (e: Exception){
+                    throw RuntimeException("Database creation failed", e)
+                }
             }
         }
     }

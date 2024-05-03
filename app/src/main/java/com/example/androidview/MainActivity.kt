@@ -12,6 +12,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.androidview.database.AppDatabase
 import com.example.androidview.databinding.ActivityMainBinding
 import com.example.androidview.ui.login.LoginActivity
 
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val db = AppDatabase.getDatabase(this)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
