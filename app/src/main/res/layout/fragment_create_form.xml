@@ -36,14 +36,30 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/answerInput"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/enter_answer"
-                android:inputType="textCapSentences"
-                android:autofillHints="answer"
-                android:minHeight="48dp"/>
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/firstRemoveButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_remove"
+                    android:contentDescription="@string/remove_answer"
+                    android:minHeight="48dp"/>
+
+                <EditText
+                    android:id="@+id/answerInput"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/enter_answer"
+                    android:autofillHints="answer"
+                    android:inputType="textCapSentences"
+                    android:minHeight="48dp" />
+
+            </LinearLayout>
         </LinearLayout>
 
         <Button

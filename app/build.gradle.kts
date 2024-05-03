@@ -44,6 +44,8 @@ dependencies {
     kapt("androidx.room:room-compiler:2.6.1")  // Changed from annotationProcessor to kapt
 
     implementation("org.mindrot:jbcrypt:0.4")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1-Beta")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1-Beta")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")

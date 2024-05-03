@@ -34,7 +34,7 @@
     <string name="new_username">Novo Korisničko ime</string>
     <string name="new_password">Lozinka</string>
     <string name="repeat_password">Ponovi lozinku</string>
-
+    <string name="remove_answer">remove</string>
 
 
 </resources>
