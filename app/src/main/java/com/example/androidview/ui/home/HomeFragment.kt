@@ -10,16 +10,15 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidview.R
+import com.example.androidview.database.PollEntity
 import com.example.androidview.databinding.FragmentHomeBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeFragment : Fragment() {
-
+    private lateinit var viewModel: HomeViewModel
     private var _binding: FragmentHomeBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -27,31 +26,34 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        return binding.root
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+        setupRecyclerView()
+        setupListeners()
 
+        viewModel.polls.observe(viewLifecycleOwner) { polls ->
+            (binding.pollsRecyclerView.adapter as PollAdapter).updatePolls(polls)
+        }
+    }
+
+    private fun setupListeners() {
         binding.addFabHome.setOnClickListener {
-            // Handle the click event, e.g., navigate to another fragment or show a dialog
             val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
-            // Toggle visibility
-            if (bottomNavigationView.isVisible) {
-                bottomNavigationView.visibility = View.GONE // Hide
-            } else {
-                bottomNavigationView.visibility = View.VISIBLE // Show
-            }
+            bottomNavigationView.visibility = View.GONE // Hide
             findNavController().navigate(R.id.createFormFragment)
             showBackButton(true)
         }
-
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-        return root
     }
+
+    private fun setupRecyclerView() {
+        binding.pollsRecyclerView.layoutManager = LinearLayoutManager(context) // Set the LayoutManager
+        binding.pollsRecyclerView.adapter = PollAdapter(emptyList())
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
