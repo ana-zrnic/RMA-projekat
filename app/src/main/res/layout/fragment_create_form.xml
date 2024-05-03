@@ -134,14 +134,34 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
-        <EditText
-            android:id="@+id/passwordInput"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/create_password"
-            android:inputType="textPassword"
-            android:autofillHints="password"
-            android:visibility="gone" />
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/copyButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_copy"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/passwordInput"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+
+                android:inputType="textVisiblePassword"
+                android:focusable="false"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:background="@android:color/transparent"
+                android:autofillHints="password"
+                android:visibility="gone" />
+        </LinearLayout>
+
+
 
         <Button
             android:id="@+id/joinButton"

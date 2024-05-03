@@ -3,9 +3,13 @@ package com.example.androidview.ui.home
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.text.InputType
+import android.text.method.HideReturnsTransformationMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +29,7 @@ import com.example.androidview.databinding.FragmentCreateFormBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.Locale
 import kotlinx.coroutines.*
+import org.mindrot.jbcrypt.BCrypt
 
 class CreateFormFragment : Fragment() {
 
@@ -54,6 +59,26 @@ class CreateFormFragment : Fragment() {
             showDateTimePicker()
         }
 
+        binding.pollWithPasswordSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                val secureCode = generateSecureCode(8)  // Generate a 8 character long code
+                binding.passwordInput.setText(secureCode)
+                binding.passwordInput.visibility = View.VISIBLE
+                binding.passwordInput.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                binding.copyButton.visibility = View.VISIBLE
+            } else {
+                binding.passwordInput.visibility = View.GONE
+                binding.copyButton.visibility = View.GONE
+            }
+        }
+
+        binding.copyButton.setOnClickListener {
+            val clipboard = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText("Password", binding.passwordInput.text.toString())
+            clipboard.setPrimaryClip(clip)
+            Toast.makeText(context, "Password copied to clipboard", Toast.LENGTH_SHORT).show()
+        }
+
         binding.joinButton.setOnClickListener {
             Log.d("CreatePoll", "Create button clicked")
             if (validateInputs()) {
@@ -63,6 +88,13 @@ class CreateFormFragment : Fragment() {
                 Log.d("CreatePoll", "Inputs are invalid")
             }
         }
+    }
+
+    private fun generateSecureCode(length: Int): String {
+        val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
+        return (1..length)
+            .map { allowedChars.random() }
+            .joinToString("")
     }
 
 
@@ -197,7 +229,6 @@ class CreateFormFragment : Fragment() {
                 }
             }
 
-
             withContext(Dispatchers.Main) {
                 showPollCreatedSuccess()
             }
@@ -205,6 +236,11 @@ class CreateFormFragment : Fragment() {
     }
 
     private fun createPollEntity(): PollEntity {
+        val passwordInput = binding.passwordInput.text.toString()
+        val hashedPassword = if (binding.pollWithPasswordSwitch.isChecked && passwordInput.isNotEmpty()) {
+            BCrypt.hashpw(passwordInput, BCrypt.gensalt())
+        } else null
+
         return PollEntity(
             title = binding.questionInput.text.toString().trim(),
             description = binding.descriptionInput.text.toString().trim(),
@@ -212,7 +248,7 @@ class CreateFormFragment : Fragment() {
             allowVoterAddedAnswers = binding.allowAddAnswersSwitch.isChecked,
             isAnonymous = binding.showVoterDetailSwitch.isChecked,
             isPasswordProtected = binding.pollWithPasswordSwitch.isChecked,
-            password = if (binding.pollWithPasswordSwitch.isChecked) binding.passwordInput.text.toString() else null,
+            password = hashedPassword,
             createdAt = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(java.util.Calendar.getInstance().time),
             expiresAt = binding.selectedDateTimeText.text.toString().takeIf { it.isNotEmpty() }
         )
