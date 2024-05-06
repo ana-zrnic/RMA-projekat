@@ -1,6 +1,7 @@
 package com.example.androidview.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import com.example.androidview.R
 import com.example.androidview.database.PollEntity
 import com.example.androidview.databinding.FragmentHomeBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.androidview.ui.home.OnPollClickListener
 
 class HomeFragment : Fragment() {
     private lateinit var viewModel: HomeViewModel
@@ -51,7 +53,20 @@ class HomeFragment : Fragment() {
 
     private fun setupRecyclerView() {
         binding.pollsRecyclerView.layoutManager = LinearLayoutManager(context) // Set the LayoutManager
-        binding.pollsRecyclerView.adapter = PollAdapter(emptyList())
+        binding.pollsRecyclerView.adapter = PollAdapter(emptyList(), object : OnPollClickListener {
+            override fun onPollClick(poll: PollEntity) {
+                Log.d("MyTag", "CLICKED")
+                val bundle = Bundle().apply {
+                    putInt("pollId", poll.pollId)
+                    putString("title", poll.title)
+                    putString("description", poll.description)
+                    // Add other data as needed
+                }
+                val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
+                bottomNavigationView.visibility = View.GONE
+                findNavController().navigate(R.id.action_navigation_home_to_pollFragment, bundle)
+            }
+        })
     }
 
 

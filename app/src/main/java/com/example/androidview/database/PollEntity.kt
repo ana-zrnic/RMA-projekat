@@ -13,5 +13,6 @@ data class PollEntity(
     var isPasswordProtected: Boolean,
     var password: String? = null,
     var createdAt: String,  // Consider using a proper date type if using TypeConverters
-    var expiresAt: String? = null
+    var expiresAt: String? = null,
+    val votesCount: Int = 0
 )

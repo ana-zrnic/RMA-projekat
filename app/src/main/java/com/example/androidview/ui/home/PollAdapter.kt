@@ -7,7 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.androidview.R
 import com.example.androidview.database.PollEntity
 
-class PollAdapter(private var polls: List<PollEntity>) : RecyclerView.Adapter<PollAdapter.PollViewHolder>() {
+interface OnPollClickListener {
+    fun onPollClick(poll: PollEntity)
+}
+class PollAdapter(private var polls: List<PollEntity>, private val listener: OnPollClickListener) : RecyclerView.Adapter<PollAdapter.PollViewHolder>() {
 
     fun updatePolls(newPolls: List<PollEntity>) {
         polls = newPolls
@@ -16,7 +19,7 @@ class PollAdapter(private var polls: List<PollEntity>) : RecyclerView.Adapter<Po
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PollViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.poll_item, parent, false)
-        return PollViewHolder(view)
+        return PollViewHolder(view, listener)
     }
 
     override fun onBindViewHolder(holder: PollViewHolder, position: Int) {
@@ -26,11 +29,12 @@ class PollAdapter(private var polls: List<PollEntity>) : RecyclerView.Adapter<Po
 
     override fun getItemCount() = polls.size
 
-    class PollViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class PollViewHolder(itemView: View, private val listener: OnPollClickListener) : RecyclerView.ViewHolder(itemView) {
         fun bind(poll: PollEntity) {
             itemView.findViewById<TextView>(R.id.pollTitle).text = poll.title
-//            itemView.findViewById<TextView>(R.id.pollVotes).text = "${poll.votesCount} votes"
-            itemView.findViewById<TextView>(R.id.pollVotes).text = "0 votes"
+            itemView.findViewById<TextView>(R.id.pollVotes).text = "${poll.votesCount} glasova"
+            //itemView.findViewById<TextView>(R.id.pollVotes).text = "0 votes"
+            itemView.setOnClickListener{ listener.onPollClick(poll) }
         }
     }
 }

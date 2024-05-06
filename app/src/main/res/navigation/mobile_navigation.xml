@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_navigation_home_to_createFormFragment"
             app:destination="@id/createFormFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_pollFragment"
+            app:destination="@id/pollFragment" />
     </fragment>
 
     <fragment
@@ -39,6 +42,11 @@
         android:label="Kreiraj anketu"
         tools:layout="@layout/fragment_create_form" />
 
+    <fragment
+        android:id="@+id/pollFragment"
+        android:name="com.example.androidview.ui.home.PollFragment"
+        android:label="Poll Details"
+        tools:layout="@layout/fragment_poll" />
 
 
 </navigation>

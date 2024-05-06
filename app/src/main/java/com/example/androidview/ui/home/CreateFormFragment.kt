@@ -270,7 +270,7 @@ class CreateFormFragment : Fragment() {
         Toast.makeText(context, "Glasanje je uspješno kreirano.", Toast.LENGTH_SHORT).show()
         val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
         bottomNavigationView.visibility = View.VISIBLE
-        // Navigate back or to the poll display fragment/activity
+        // Navigate back or to the fragment_poll display fragment/activity
         findNavController().navigate(R.id.navigation_home)
     }
 
