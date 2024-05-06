@@ -61,6 +61,7 @@ class HomeFragment : Fragment() {
                     putString("title", poll.title)
                     putString("description", poll.description)
                     // Add other data as needed
+                    putBoolean("allowMultipleVotes", poll.allowMultipleVotes)
                 }
                 val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
                 bottomNavigationView.visibility = View.GONE

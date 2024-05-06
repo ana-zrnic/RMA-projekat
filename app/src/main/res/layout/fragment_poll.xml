@@ -39,4 +39,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <RadioGroup
+        android:id="@+id/pollOptionsGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/pollDescription" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
