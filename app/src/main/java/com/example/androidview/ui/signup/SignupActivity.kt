@@ -3,12 +3,14 @@ package com.example.androidview.ui.signup
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.androidview.databinding.ActivitySignupBinding
 import com.example.androidview.ui.UserViewModel
+import kotlin.math.log
 
 class SignupActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignupBinding
@@ -37,6 +39,7 @@ class SignupActivity : AppCompatActivity() {
 
             if (validateInput(username, email, password)) {
                 viewModel.registerUser(username, email, password)
+                Log.d("SignupActivity", "Registering user")
                 observeViewModel()
             } else {
                 Toast.makeText(this, "Invalid input", Toast.LENGTH_SHORT).show()
@@ -45,8 +48,10 @@ class SignupActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
+        Log.d("SignupActivity", "Observing ViewModel")
         viewModel.registrationResult.observe(this) { isSuccess ->
             if (isSuccess) {
+                Log.d("SignupActivity", "Registration successful")
                 Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show()
                 finish()
             } else {
@@ -64,7 +69,6 @@ class SignupActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                // This ID represents the Home or Up button; in case of your activity, it's Up
                 onBackPressed()
                 return true
             }

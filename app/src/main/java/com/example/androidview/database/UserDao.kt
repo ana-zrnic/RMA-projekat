@@ -17,6 +17,12 @@ interface UserDao {
     @Query("SELECT * FROM users WHERE email = :email")
     fun getUserByEmail(email: String?): UserEntity?
 
+    @Query("SELECT * FROM users WHERE user_name = :userName")
+    fun getUserByUserName(userName: String?): UserEntity?
+
+    @Query("SELECT * FROM users WHERE user_name = :username OR email = :email LIMIT 1")
+    fun getUserByUsernameOrEmail(username: String, email: String): UserEntity?
+
     @Update
     fun update(user: UserEntity)
 

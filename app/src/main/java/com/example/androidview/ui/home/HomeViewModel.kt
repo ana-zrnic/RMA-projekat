@@ -38,6 +38,9 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
             val pollsFromDb = database.pollDao().getAllPolls(userId)
             pollsFromDb.observeForever { polls ->
                 _polls.postValue(polls)
+                if (polls.isEmpty()) {
+                    updateText("Trenutno nemate aktivnih anketa")
+                }
             }
         }
     }

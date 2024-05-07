@@ -28,7 +28,8 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
 
     fun registerUser(userName: String, email: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            userRepository.registerUser(userName, email, password)
+            val result = userRepository.registerUser(userName, email, password)
+            _registrationResult.postValue(result)
         }
     }
 
