@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.androidview.database.AppDatabase
+import com.example.androidview.database.UserEntity
 import com.example.androidview.database.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,4 +38,9 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
             _loginResult.postValue(result)
         }
     }
+
+    fun getUserByEmail(email: String): UserEntity? {
+        return userRepository.getUserByEmail(email)
+    }
+
 }

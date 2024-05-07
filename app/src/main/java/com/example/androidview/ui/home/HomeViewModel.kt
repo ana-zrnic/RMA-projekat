@@ -1,6 +1,7 @@
 package com.example.androidview.ui.home
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -32,10 +33,12 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     private fun loadPolls() {
         viewModelScope.launch {
             val database = AppDatabase.getDatabase(getApplication<Application>().applicationContext)
-            val pollsFromDb = withContext(Dispatchers.IO) {
-                database.pollDao().getAllPolls()
+            val sharedPref = getApplication<Application>().getSharedPreferences("MyPref", Context.MODE_PRIVATE)
+            val userId = sharedPref.getInt("userId", -1)
+            val pollsFromDb = database.pollDao().getAllPolls(userId)
+            pollsFromDb.observeForever { polls ->
+                _polls.postValue(polls)
             }
-            _polls.postValue(pollsFromDb)
         }
     }
 

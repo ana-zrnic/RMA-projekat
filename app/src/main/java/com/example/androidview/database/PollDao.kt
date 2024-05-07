@@ -9,8 +9,8 @@ interface PollDao {
     @Insert
     fun insertPoll(poll: PollEntity): Long
 
-    @Query("SELECT * FROM polls")
-    fun getAllPolls(): List<PollEntity>
+    @Query("SELECT * FROM polls WHERE userId = :userId")
+    fun getAllPolls(userId: Int): LiveData<List<PollEntity>>
 
     @Query("SELECT * FROM options WHERE pollId = :pollId")
     fun getOptionsForPoll(pollId: Int): LiveData<List<OptionEntity>>

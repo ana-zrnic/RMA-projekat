@@ -236,12 +236,16 @@ class CreateFormFragment : Fragment() {
     }
 
     private fun createPollEntity(): PollEntity {
+        val sharedPref = requireActivity().getSharedPreferences("MyPref", Context.MODE_PRIVATE)
+        val userId = sharedPref.getInt("userId", -1)
+
         val passwordInput = binding.passwordInput.text.toString()
         val hashedPassword = if (binding.pollWithPasswordSwitch.isChecked && passwordInput.isNotEmpty()) {
             BCrypt.hashpw(passwordInput, BCrypt.gensalt())
         } else null
 
         return PollEntity(
+            userId = userId,
             title = binding.questionInput.text.toString().trim(),
             description = binding.descriptionInput.text.toString().trim(),
             allowMultipleVotes = binding.multipleVotesSwitch.isChecked,

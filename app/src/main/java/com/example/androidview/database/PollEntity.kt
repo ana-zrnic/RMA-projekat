@@ -1,10 +1,22 @@
 package com.example.androidview.database
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "polls")
+@Entity(
+    tableName = "polls",
+    foreignKeys = [
+        ForeignKey(
+            entity = UserEntity::class,
+            parentColumns = ["id"],
+            childColumns = ["userId"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
+)
 data class PollEntity(
     @PrimaryKey(autoGenerate = true) var pollId: Int = 0,
+    var userId: Int,
     var title: String,
     var description: String,
     var allowMultipleVotes: Boolean,

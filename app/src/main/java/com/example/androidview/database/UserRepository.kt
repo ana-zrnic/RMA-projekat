@@ -18,4 +18,8 @@ class UserRepository(private val userDao: UserDao) {
         val user = userDao.getUserByEmail(email)
         return user != null && BCrypt.checkpw(password, user.password)
     }
+
+    fun getUserByEmail(email: String): UserEntity? {
+        return userDao.getUserByEmail(email)
+    }
 }
