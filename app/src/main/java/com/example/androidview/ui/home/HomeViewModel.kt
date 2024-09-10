@@ -4,14 +4,11 @@ import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.androidview.database.AppDatabase
 import androidx.lifecycle.AndroidViewModel
 import com.example.androidview.database.PollEntity
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
@@ -35,7 +32,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
             val database = AppDatabase.getDatabase(getApplication<Application>().applicationContext)
             val sharedPref = getApplication<Application>().getSharedPreferences("MyPref", Context.MODE_PRIVATE)
             val userId = sharedPref.getInt("userId", -1)
-            val pollsFromDb = database.pollDao().getAllPolls(userId)
+            val pollsFromDb = database.pollDao().getAllPollsByUser(userId)
             pollsFromDb.observeForever { polls ->
                 _polls.postValue(polls)
                 if (polls.isEmpty()) {
