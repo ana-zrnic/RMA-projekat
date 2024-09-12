@@ -26,6 +26,9 @@
         <action
             android:id="@+id/action_navigation_dashboard_to_joinFormFragment"
             app:destination="@id/joinFormFragment" />
+        <action
+            android:id="@+id/action_navigation_dashboard_to_pollFragment"
+            app:destination="@id/pollFragment" />
     </fragment>
 
     <!-- Definition for the JoinFormFragment -->

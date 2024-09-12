@@ -9,9 +9,15 @@ class PollRepository(private val pollDao: PollDao) {
         return pollDao.getOptionsForPoll(pollId)
     }
 
-    fun joinPoll(pollId: Int, userId: Int) {
+    fun joinPoll(pollId: Int, userId: Int): Boolean{
+        return try {
             pollDao.addUserToPoll(userId, pollId)
-            Log.d("pollrepo", "ODRADJENO")
+            true
+        } catch (e: Exception) {
+            Log.e("PollRepository", "Error joining poll", e)
+            false
+        }
+
     }
     fun getPollIdByPassword(password: String): Int? {
         val polls = pollDao.getAllPolls()

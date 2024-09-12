@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 
 class PollViewModel(private val repository: PollRepository) : ViewModel() {
     private val pollRepository: PollRepository = repository
+    val joinPollResult = MutableLiveData<Boolean>()
 
 
 
@@ -22,7 +23,8 @@ class PollViewModel(private val repository: PollRepository) : ViewModel() {
     fun joinPoll(pollId: Int, userId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             val result = pollRepository.joinPoll(pollId, userId)
-            // Handle the result here, e.g., update a LiveData
+            // Redirect to dashboard fragment
+            joinPollResult.postValue(result)
         }
     }
 

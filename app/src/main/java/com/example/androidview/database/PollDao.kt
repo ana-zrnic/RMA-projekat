@@ -24,6 +24,9 @@ interface PollDao {
     @Query("INSERT INTO user_polls VALUES (:userId, :pollId)")
     fun addUserToPoll(userId: Int, pollId: Int)
 
+    @Query("SELECT * FROM polls WHERE pollId IN (SELECT pollId FROM user_polls WHERE userId = :userId)")
+    fun getAllUserPollsByUser(userId: Int): LiveData<List<PollEntity>>
+
     @Query("SELECT * FROM polls WHERE password = :password LIMIT 1")
     fun getPollByPassword(password: String): PollEntity?
 

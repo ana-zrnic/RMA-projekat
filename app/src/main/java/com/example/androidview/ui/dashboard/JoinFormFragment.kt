@@ -6,14 +6,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.example.androidview.R
 import com.example.androidview.database.AppDatabase
 import com.example.androidview.database.PollRepository
 import com.example.androidview.databinding.FragmentJoinFormBinding
 import com.example.androidview.ui.home.PollViewModel
 import com.example.androidview.ui.home.PollViewModelFactory
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class JoinFormFragment : Fragment() {
 
@@ -60,11 +64,26 @@ class JoinFormFragment : Fragment() {
                 val userId = sharedPref.getInt("userId", -1)
 
                 pollViewModel.joinPoll(pollId, userId)
-                Log.d("JoinPoll", "Join")
+                pollViewModel.joinPollResult.observe(viewLifecycleOwner, Observer { result ->
+                    if (result) {
+                        showJoinSuccess()
+                    }
+                    else {
+                        binding.passwordInput.error = "DB error"
+                    }
+                })
             } else {
                 binding.passwordInput.error = "Anketa ne postoji ili je unesena pogresna lozinka"
             }
         })
+    }
+
+    private fun showJoinSuccess() {
+        Toast.makeText(context, "Uspjesno ste se pridruzili.", Toast.LENGTH_SHORT).show()
+        val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
+        bottomNavigationView.visibility = View.VISIBLE
+        // Navigate back or to the fragment_poll display fragment/activity
+        findNavController().navigate(R.id.navigation_dashboard)
     }
 
     private fun updateUserJoinedPolls() {
