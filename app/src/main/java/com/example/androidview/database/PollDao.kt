@@ -19,7 +19,7 @@ interface PollDao {
     fun getOptionsForPoll(pollId: Int): LiveData<List<OptionEntity>>
 
     @Query("SELECT * FROM polls WHERE pollId = :pollId")
-    fun getPollById(pollId: Int): PollEntity?
+    fun getPollById(pollId: Int): LiveData<PollEntity>
 
     @Query("INSERT INTO user_polls VALUES (:userId, :pollId)")
     fun addUserToPoll(userId: Int, pollId: Int)

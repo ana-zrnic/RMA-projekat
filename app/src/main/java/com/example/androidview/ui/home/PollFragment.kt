@@ -49,6 +49,7 @@ class PollFragment : Fragment() {
         // Do the same for the other views
         val pollOptionsGroup = view.findViewById<RadioGroup>(R.id.pollOptionsGroup)
         if (pollId != null) {
+            viewModel.getPoll(pollId).observe(viewLifecycleOwner, Observer { poll ->
             viewModel.getOptionsForPoll(pollId).observe(viewLifecycleOwner, Observer { options ->
                 // Add a RadioButton for each option
                 for (option in options) {
@@ -63,6 +64,17 @@ class PollFragment : Fragment() {
                         pollOptionsGroup.addView(radioButton)
                     }
                 }
+
+
+                //val poll = viewModel.getPollById(pollId)
+                if (poll.hasExpired()) {
+                    for (i in 0 until pollOptionsGroup.childCount) {
+                        val answerView = pollOptionsGroup.getChildAt(i)
+                        //answerView.isEnabled = false
+                        answerView.isClickable = false
+                    }
+                }
+            })
             })
         }
     }

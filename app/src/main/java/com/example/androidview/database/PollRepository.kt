@@ -5,6 +5,10 @@ import androidx.lifecycle.LiveData
 import org.mindrot.jbcrypt.BCrypt
 
 class PollRepository(private val pollDao: PollDao) {
+
+    fun getPoll(id: Int): LiveData<PollEntity> {
+        return pollDao.getPollById(id)
+    }
     fun getOptionsForPoll(pollId: Int): LiveData<List<OptionEntity>> {
         return pollDao.getOptionsForPoll(pollId)
     }

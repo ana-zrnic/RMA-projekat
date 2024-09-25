@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.androidview.database.OptionEntity
+import com.example.androidview.database.PollEntity
 import com.example.androidview.database.PollRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,7 +15,9 @@ class PollViewModel(private val repository: PollRepository) : ViewModel() {
     private val pollRepository: PollRepository = repository
     val joinPollResult = MutableLiveData<Boolean>()
 
-
+    fun getPoll(id: Int): LiveData<PollEntity> {
+        return repository.getPoll(id)
+    }
 
     fun getOptionsForPoll(pollId: Int): LiveData<List<OptionEntity>> {
         return pollRepository.getOptionsForPoll(pollId)
