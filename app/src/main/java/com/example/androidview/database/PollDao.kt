@@ -30,5 +30,13 @@ interface PollDao {
     @Query("SELECT * FROM polls WHERE password = :password LIMIT 1")
     fun getPollByPassword(password: String): PollEntity?
 
+    @Insert
+    fun saveResponse(response: ResponseEntity)
+
+    @Query("SELECT EXISTS(SELECT 1 FROM responses WHERE userId = :userId AND pollId = :pollId)")
+    fun hasUserVoted(userId: Int, pollId: Int): LiveData<Boolean>
+
+    @Query("SELECT * FROM responses WHERE userId = :userId AND pollId = :pollId")
+    fun getResponses(userId: Int, pollId: Int): LiveData<List<ResponseEntity>>
 
 }

@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import java.lang.RuntimeException
 
 
-@Database(entities = [UserEntity::class, PollEntity::class, OptionEntity::class, ResponseEntity::class, UserPollEntity::class], version = 5, exportSchema = false)
+@Database(entities = [UserEntity::class, PollEntity::class, OptionEntity::class, ResponseEntity::class, UserPollEntity::class], version = 7, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun pollDao(): PollDao

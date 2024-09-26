@@ -1,5 +1,6 @@
 package com.example.androidview.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -31,6 +32,7 @@ interface UserDao {
 
     @Query("SELECT * FROM users WHERE id = :userId")
     fun getUserById(userId: Int): UserEntity?
+
 
     @get:Query("SELECT * FROM users")
     val allUsers: List<UserEntity>

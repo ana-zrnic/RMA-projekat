@@ -2,9 +2,17 @@ package com.example.androidview.database
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.mindrot.jbcrypt.BCrypt
 
 class PollRepository(private val pollDao: PollDao) {
+
+    suspend fun saveResponse(response: ResponseEntity) {
+        withContext(Dispatchers.IO) {
+            pollDao.saveResponse(response)
+        }
+    }
 
     fun getPoll(id: Int): LiveData<PollEntity> {
         return pollDao.getPollById(id)
@@ -32,5 +40,13 @@ class PollRepository(private val pollDao: PollDao) {
             }
         }
         return null
+    }
+
+    fun hasUserVoted(userId: Int, pollId: Int): LiveData<Boolean> {
+        return pollDao.hasUserVoted(userId, pollId)
+    }
+
+    fun getResponses(userId: Int, pollId: Int): LiveData<List<ResponseEntity>> {
+        return pollDao.getResponses(userId, pollId)
     }
 }

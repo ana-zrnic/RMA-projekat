@@ -9,13 +9,22 @@ import androidx.room.Index
         ForeignKey(entity = OptionEntity::class,
             parentColumns = arrayOf("optionId"),
             childColumns = arrayOf("optionId"),
-            onDelete = ForeignKey.CASCADE)
+            onDelete = ForeignKey.CASCADE),
+        ForeignKey(entity = PollEntity::class,
+            parentColumns = arrayOf("pollId"),
+            childColumns = arrayOf("pollId"),
+            onDelete = ForeignKey.CASCADE),
+        ForeignKey(entity = UserEntity::class,
+            parentColumns = arrayOf("id"),
+            childColumns = arrayOf("userId"),
+            onDelete = ForeignKey.SET_NULL)  // Assuming userId is nullable for anonymous polls
     ],
-    indices = [Index(value = ["optionId"])]
+    indices = [Index(value = ["optionId"]), Index(value = ["pollId"]), Index(value = ["userId"])]
 )
 data class ResponseEntity(
     @PrimaryKey(autoGenerate = true) var responseId: Int = 0,
     var optionId: Int,
+    var pollId: Int,
     var userId: Int?,  // Nullable for anonymous polls
     var votedAt: String  // Consider using a proper date type if using TypeConverters
 )

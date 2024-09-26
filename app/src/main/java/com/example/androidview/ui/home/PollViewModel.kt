@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.androidview.database.OptionEntity
 import com.example.androidview.database.PollEntity
 import com.example.androidview.database.PollRepository
+import com.example.androidview.database.ResponseEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -15,6 +16,9 @@ class PollViewModel(private val repository: PollRepository) : ViewModel() {
     private val pollRepository: PollRepository = repository
     val joinPollResult = MutableLiveData<Boolean>()
 
+    fun saveResponse(response: ResponseEntity) = viewModelScope.launch {
+        repository.saveResponse(response)
+    }
     fun getPoll(id: Int): LiveData<PollEntity> {
         return repository.getPoll(id)
     }
@@ -38,5 +42,13 @@ class PollViewModel(private val repository: PollRepository) : ViewModel() {
         }
         Log.d("pollVM", "Poll ID: $pollId")
         return pollId
+    }
+
+    fun hasUserVoted(userId: Int, pollId: Int): LiveData<Boolean> {
+        return repository.hasUserVoted(userId, pollId)
+    }
+
+    fun getResponses(userId: Int, pollId: Int): LiveData<List<ResponseEntity>> {
+        return repository.getResponses(userId, pollId)
     }
 }
