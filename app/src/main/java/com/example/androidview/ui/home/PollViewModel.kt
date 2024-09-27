@@ -51,4 +51,16 @@ class PollViewModel(private val repository: PollRepository) : ViewModel() {
     fun getResponses(userId: Int, pollId: Int): LiveData<List<ResponseEntity>> {
         return repository.getResponses(userId, pollId)
     }
+
+    fun getVoteCount(pollId: Int): LiveData<Int> {
+        return repository.getVoteCount(pollId)
+    }
+
+    fun getResponsesForOption(optionId: Int): LiveData<List<ResponseEntity>> {
+        return repository.getResponsesForOption(optionId)
+    }
+
+    fun getUsernames(userIds: List<Int>): LiveData<List<String>> {
+        return repository.getUsernames(userIds)
+    }
 }

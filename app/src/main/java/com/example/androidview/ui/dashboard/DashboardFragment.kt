@@ -14,12 +14,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidview.R
+import com.example.androidview.database.AppDatabase
 import com.example.androidview.database.PollEntity
+import com.example.androidview.database.PollRepository
 import com.example.androidview.databinding.FragmentDashboardBinding
 import com.example.androidview.databinding.FragmentHomeBinding
 import com.example.androidview.ui.home.HomeViewModel
 import com.example.androidview.ui.home.OnPollClickListener
 import com.example.androidview.ui.home.PollAdapter
+import com.example.androidview.ui.home.PollViewModel
+import com.example.androidview.ui.home.PollViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class DashboardFragment : Fragment() {
@@ -58,6 +62,11 @@ class DashboardFragment : Fragment() {
 
     private fun setupRecyclerView() {
         binding.pollsRecyclerView.layoutManager = LinearLayoutManager(context) // Set the LayoutManager
+        val pollDao = AppDatabase.getDatabase(requireContext()).pollDao()
+        val pollRepository = PollRepository(pollDao)
+        val pollViewModelFactory = PollViewModelFactory(pollRepository)
+        val pollViewModel = ViewModelProvider(this, pollViewModelFactory)[PollViewModel::class.java]
+
         binding.pollsRecyclerView.adapter = PollAdapter(emptyList(), object : OnPollClickListener {
             override fun onPollClick(poll: PollEntity) {
                 Log.d("MyTag", "CLICKED")
@@ -72,7 +81,7 @@ class DashboardFragment : Fragment() {
                 bottomNavigationView.visibility = View.GONE
                 findNavController().navigate(R.id.action_navigation_dashboard_to_pollFragment, bundle)
             }
-        })
+        }, pollViewModel)
     }
 
     override fun onDestroyView() {

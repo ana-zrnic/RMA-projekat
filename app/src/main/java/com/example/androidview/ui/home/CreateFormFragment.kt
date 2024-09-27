@@ -249,7 +249,7 @@ class CreateFormFragment : Fragment() {
             title = binding.questionInput.text.toString().trim(),
             description = binding.descriptionInput.text.toString().trim(),
             allowMultipleVotes = binding.multipleVotesSwitch.isChecked,
-            allowVoterAddedAnswers = binding.allowAddAnswersSwitch.isChecked,
+            allowVoterAddedAnswers = false,
             isAnonymous = binding.showVoterDetailSwitch.isChecked,
             isPasswordProtected = binding.pollWithPasswordSwitch.isChecked,
             password = hashedPassword,

@@ -35,8 +35,11 @@ class PollRepository(private val pollDao: PollDao) {
         val polls = pollDao.getAllPolls()
 
         for (poll in polls) {
-            if (BCrypt.checkpw(password, poll.password)) {
-                return poll.pollId
+            val hashedPassword = poll.password
+            if (hashedPassword != null && password != null) {
+                if (BCrypt.checkpw(password, hashedPassword)) {
+                    return poll.pollId
+                }
             }
         }
         return null
@@ -48,5 +51,17 @@ class PollRepository(private val pollDao: PollDao) {
 
     fun getResponses(userId: Int, pollId: Int): LiveData<List<ResponseEntity>> {
         return pollDao.getResponses(userId, pollId)
+    }
+
+    fun getVoteCount(pollId: Int): LiveData<Int> {
+        return pollDao.getVoteCount(pollId)
+    }
+
+    fun getResponsesForOption(optionId: Int): LiveData<List<ResponseEntity>> {
+        return pollDao.getResponsesForOption(optionId)
+    }
+
+    fun getUsernames(userIds: List<Int>): LiveData<List<String>> {
+        return pollDao.getUsernames(userIds)
     }
 }

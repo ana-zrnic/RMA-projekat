@@ -40,12 +40,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <RadioGroup
-        android:id="@+id/pollOptionsGroup"
+
+    <LinearLayout
+        android:id="@+id/pollOptionsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/pollDescription" />
+        app:layout_constraintTop_toBottomOf="@id/pollDescription">
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/confirmButton"
@@ -55,5 +58,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,7 +13,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidview.R
+import com.example.androidview.database.AppDatabase
+import com.example.androidview.database.PollDao
 import com.example.androidview.database.PollEntity
+import com.example.androidview.database.PollRepository
 import com.example.androidview.databinding.FragmentHomeBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.example.androidview.ui.home.OnPollClickListener
@@ -53,6 +56,11 @@ class HomeFragment : Fragment() {
 
     private fun setupRecyclerView() {
         binding.pollsRecyclerView.layoutManager = LinearLayoutManager(context) // Set the LayoutManager
+        val pollDao = AppDatabase.getDatabase(requireContext()).pollDao()
+        val pollRepository = PollRepository(pollDao) // Replace with your actual PollDao
+        val pollViewModelFactory = PollViewModelFactory(pollRepository)
+        val pollViewModel = ViewModelProvider(this, pollViewModelFactory)[PollViewModel::class.java]
+
         binding.pollsRecyclerView.adapter = PollAdapter(emptyList(), object : OnPollClickListener {
             override fun onPollClick(poll: PollEntity) {
                 Log.d("MyTag", "CLICKED")
@@ -67,7 +75,7 @@ class HomeFragment : Fragment() {
                 bottomNavigationView.visibility = View.GONE
                 findNavController().navigate(R.id.action_navigation_home_to_pollFragment, bundle)
             }
-        })
+        }, pollViewModel)
     }
 
 

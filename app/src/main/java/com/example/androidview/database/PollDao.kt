@@ -39,4 +39,14 @@ interface PollDao {
     @Query("SELECT * FROM responses WHERE userId = :userId AND pollId = :pollId")
     fun getResponses(userId: Int, pollId: Int): LiveData<List<ResponseEntity>>
 
+    @Query("SELECT COUNT(*) FROM responses WHERE pollId = :pollId")
+    fun getVoteCount(pollId: Int): LiveData<Int>
+
+    @Query("SELECT * FROM responses WHERE optionId = :optionId")
+    fun getResponsesForOption(optionId: Int): LiveData<List<ResponseEntity>>
+
+    @Query("SELECT user_name FROM users WHERE id IN (:userIds)")
+    fun getUsernames(userIds: List<Int>): LiveData<List<String>>
+
+
 }

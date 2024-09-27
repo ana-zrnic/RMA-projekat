@@ -8,8 +8,8 @@
 
     <string name="enter_question">Unesi pitanje</string>
     <string name="enter_description">Unesi opis</string>
-    <string name="enter_answer">Unesi odgovor</string>
-    <string name="add_answer">Dodaj odgovor</string>
+    <string name="enter_answer">Unesi izbor</string>
+    <string name="add_answer">Dodaj izbor</string>
     <string name="allow_multiple_votes">Dozvoli višestruko glasanje</string>
     <string name="allow_voters_to_add_answers">Dozvoli glasačima da dodaju odgovore</string>
     <string name="show_detail_of_voter">Prikaži detalje glasača</string>

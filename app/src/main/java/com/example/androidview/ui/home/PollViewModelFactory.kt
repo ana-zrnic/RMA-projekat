@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.androidview.database.PollRepository
 
 class PollViewModelFactory(private val repository: PollRepository) : ViewModelProvider.Factory {
+
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(PollViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
@@ -12,4 +13,6 @@ class PollViewModelFactory(private val repository: PollRepository) : ViewModelPr
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
+
+
 }
