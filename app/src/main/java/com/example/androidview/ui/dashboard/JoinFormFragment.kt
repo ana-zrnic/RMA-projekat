@@ -63,13 +63,11 @@ class JoinFormFragment : Fragment() {
                 val sharedPref = requireActivity().getSharedPreferences("MyPref", Context.MODE_PRIVATE)
                 val userId = sharedPref.getInt("userId", -1)
 
-                pollViewModel.joinPoll(pollId, userId)
-                pollViewModel.joinPollResult.observe(viewLifecycleOwner, Observer { result ->
-                    if (result) {
-                        showJoinSuccess()
-                    }
-                    else {
-                        binding.passwordInput.error = "DB error"
+                pollViewModel.joinPoll(pollId, userId).observe(viewLifecycleOwner, Observer { joinResult ->
+                    when (joinResult) {
+                        0 -> showJoinSuccess()
+                        -1 -> binding.passwordInput.error = "Vec ste clan ovog upitnika"
+                        -2 -> binding.passwordInput.error = "DB error"
                     }
                 })
             } else {

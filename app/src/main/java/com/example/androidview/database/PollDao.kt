@@ -48,5 +48,11 @@ interface PollDao {
     @Query("SELECT user_name FROM users WHERE id IN (:userIds)")
     fun getUsernames(userIds: List<Int>): LiveData<List<String>>
 
+    @Query("SELECT COUNT(*) > 0 FROM user_polls WHERE userId = :userId AND pollId = :pollId")
+    fun hasUserJoinedPoll(userId: Int, pollId: Int): Boolean
+
+    @Query("SELECT COUNT(*) > 0 FROM polls WHERE userId = :userId AND pollId = :pollId")
+    fun hasUserCreatedPoll(userId: Int, pollId: Int): Boolean
+
 
 }

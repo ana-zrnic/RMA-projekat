@@ -21,13 +21,17 @@ class PollRepository(private val pollDao: PollDao) {
         return pollDao.getOptionsForPoll(pollId)
     }
 
-    fun joinPoll(pollId: Int, userId: Int): Boolean{
+    fun joinPoll(pollId: Int, userId: Int): Int{
         return try {
+            if (pollDao.hasUserJoinedPoll(userId, pollId) or pollDao.hasUserCreatedPoll(userId, pollId)) {
+                // User has already joined the poll
+                return -1
+            }
             pollDao.addUserToPoll(userId, pollId)
-            true
+            return 0
         } catch (e: Exception) {
             Log.e("PollRepository", "Error joining poll", e)
-            false
+            return -2
         }
 
     }
