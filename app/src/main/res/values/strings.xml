@@ -23,13 +23,13 @@
     <string name="action_join">Pridruži se</string>
 
     <!-- Strings for Login Activity -->
-    <string name="email">Email</string>
+    <string name="email">Email ili Korisničko ime</string>
     <string name="password">Lozinka</string>
     <string name="login">Prijavi me</string>
     <string name="goto_signup">Kreiraj nalog</string>
 
     <!-- Strings for Signup Activity -->
-    <string name="username">Kreiraj Korisnicko ime</string>
+    <string name="username">Kreiraj Korisničko ime</string>
     <string name="signup">Kreiraj nalog</string>
     <string name="new_username">Novo Korisničko ime</string>
     <string name="new_password">Lozinka</string>

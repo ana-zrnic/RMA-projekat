@@ -38,7 +38,7 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
                 lifecycleScope.launch(Dispatchers.IO) {
                     // Fetch the user's information
-                    val user = viewModel.getUserByEmail(binding.email.text.toString())
+                    val user = viewModel.getUser(binding.email.text.toString())
 
                     // Store the user's information in the shared preferences
                     val sharedPref = getSharedPreferences("MyPref", Context.MODE_PRIVATE)

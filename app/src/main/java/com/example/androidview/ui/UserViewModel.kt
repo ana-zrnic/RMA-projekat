@@ -33,15 +33,16 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun loginUser(email: String, password: String) {
+    fun loginUser(usernameOrEmail: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = userRepository.loginUser(email, password)
+            val result = userRepository.loginUser(usernameOrEmail, password)
             _loginResult.postValue(result)
         }
     }
 
-    fun getUserByEmail(email: String): UserEntity? {
-        return userRepository.getUserByEmail(email)
+    fun getUser(email: String): UserEntity? {
+        return userRepository.getUser(email)
     }
+
 
 }

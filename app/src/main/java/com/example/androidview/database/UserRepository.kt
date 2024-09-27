@@ -15,12 +15,23 @@ class UserRepository(private val userDao: UserDao) {
         return true
     }
 
-    fun loginUser(email: String, password: String): Boolean {
-        val user = userDao.getUserByEmail(email)
+    fun loginUser(usernameOrEmail: String, password: String): Boolean {
+        val user = if (usernameOrEmail.contains("@")) {
+            // The input is an email
+            userDao.getUserByEmail(usernameOrEmail)
+        } else {
+            // The input is a username
+            userDao.getUserByUserName(usernameOrEmail)
+        }
         return user != null && BCrypt.checkpw(password, user.password)
     }
-
-    fun getUserByEmail(email: String): UserEntity? {
-        return userDao.getUserByEmail(email)
+    fun getUser(email: String): UserEntity? {
+        return if (email.contains("@")) {
+            userDao.getUserByEmail(email)
+        } else {
+            userDao.getUserByUserName(email)
+        }
     }
+
+
 }
